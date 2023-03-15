@@ -1,38 +1,46 @@
 package practices;
-import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 public class UnionFind {
     HashMap<Integer,Integer> map = new HashMap<>();
+    HashMap<Integer, Boolean> takenValue = new HashMap<Integer, Boolean>() {{
+        put(0,false);
+        put(1,false);
+        put(2,false);
+        put(3,false);
+        put(4,false);
+        put(5,false);
+        put(6,false);
+        put(7,false);
+        put(8,false);
+        put(9,false);
+    }};
 
     public boolean isConnected(int p, int q){
-        if (map.containsKey(p) && map.get(p).equals(q))
-            return true;
-        else if(map.containsKey(q) && map.get(q).equals(p))
+        if(map.isEmpty())
+            return false;
+        if (map.get(p) == map.get(q))
             return true;
         return false;
     }
 
-    public void union(int p,int q){
-        if(!map.containsKey(p)){
-            map.put(p,q);
-        }
-        else if (map.containsKey(p)){
-            map.put(q,p);
-        }
-        int k = p;
-        int v = q;
-        while(map.containsValue(k) || map.containsKey(v)){
-            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-                if (entry.getValue().equals(k)) {
-                    k = entry.getKey();
-                }
-                else if(entry.getKey().equals(v)){
-                    v = entry.getValue();
-                }
-            }
-            map.put(v,k);
-        }
+    public void union(int p,int q) {
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(10);
 
+        if (!map.containsKey(p) && !map.containsKey(q)) {
+            if(!takenValue.get(randomNumber)){
+                map.put(p, randomNumber);
+                map.put(q, randomNumber);
+                takenValue.put(randomNumber,true);
+            }
+        }
+        else if (!map.containsKey(p) && map.containsKey(q)){
+            map.put(p,map.get(q));
+        }
+        else if (!map.containsKey(q) && map.containsKey(p)){
+            map.put(q,map.get(p));
+        }
     }
 }

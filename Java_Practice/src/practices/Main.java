@@ -1,6 +1,5 @@
 package practices;
 import java.io.*;
-import java.util.*;
 
 public class Main {
 
@@ -31,20 +30,20 @@ public class Main {
         String N = "0";
         N = br.readLine();
 
-        UnionFind uf = new UnionFind();
+        FailedUnionFind uf = new FailedUnionFind();
+        UnionFind suf = new UnionFind();
 
         for (int i = 0; i < Integer.parseInt(N); i++) {
             String[] pq = br.readLine().split(" ");
             int p = Integer.parseInt(pq[0]);
             int q = Integer.parseInt(pq[1]);
-            if(!uf.isConnected(p,q)){
-                uf.union(p,q);
+            if(!suf.isConnected(p,q)){
+                suf.union(p,q);
                 System.out.println(p+ " "+q);
             }
             else {
                 System.out.println("Both the point "+p+" and "+q+" is already connected");
             }
-
         }
 
         //End--> UnionFind

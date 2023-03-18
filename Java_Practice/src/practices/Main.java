@@ -3,20 +3,23 @@ package practices;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        /*System.out.println(process("Hey! this is test", new Processor() {
-            @Override
-            public String process(String str) {
-                return str.toLowerCase();
+        MyService myService = new MyService();
+        Runnable task = new MyTask();
+
+        /*for(int i=0;i<20;i++){
+            myService.doSomething();
+        }*/
+        for(int i=0;i<20;i++){
+            try {
+                myService.processTask(new MyTask());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        ));*/
-        Permutation p = new Permutation();
-        p.permutation("ab","");
 
-    }
+        myService.shutdown();
 
-    private static String process(String s, Processor process) {
-        return process.process(s);
+        System.out.println("All tasks have been executed");
+
     }
 }

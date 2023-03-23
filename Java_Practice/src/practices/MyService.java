@@ -11,6 +11,18 @@ public class MyService {
     public MyService(){
         executorService = Executors.newFixedThreadPool(10);
     }
+    public MyService(int one){
+        executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public void usingFutureObject(Runnable task) throws ExecutionException, InterruptedException {
+        Future<String> future = executorService.submit(() -> {
+            Thread.sleep(1000);
+            return "Hello this is using future object";
+        });
+        /*Future future = executorService.submit(task);*/
+        System.out.println(future.get());
+    }
 
     public void doSomething(){
         Runnable task = new MyTask();

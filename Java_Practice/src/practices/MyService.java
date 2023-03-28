@@ -32,9 +32,14 @@ public class MyService {
     public void processTask(Runnable task) throws InterruptedException{
         int attempt = 1;
         while(attempt <= MAX_ATTEMPTS){
-            System.out.println("Attempting task, attempt "+ attempt);
+            //System.out.println("Attempting task, attempt "+ attempt);
 
             try {
+                task = () -> {
+                    for (int i = 1; i <= 5; i++) {
+                        System.out.println(Thread.currentThread().getName() + " : " + i);
+                    }
+                };
                 executorService.submit(task).get();
                 return;
             }

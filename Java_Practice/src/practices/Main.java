@@ -3,20 +3,31 @@ package practices;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        /*System.out.println(process("Hey! this is test", new Processor() {
-            @Override
-            public String process(String str) {
-                return str.toLowerCase();
-            }
-        }
-        ));*/
-        Permutation p = new Permutation();
-        p.permutation("ab","");
+        PriorityExpiryCache<String, String> cache = new PriorityExpiryCache<>(3);
 
+        cache.put("key1", "value1", System.currentTimeMillis() + 5000, 1);
+        cache.put("key2", "value2", System.currentTimeMillis() + 10000, 0);
+        cache.put("key3", "value3", System.currentTimeMillis() + 15000, 0);
+
+        System.out.println(cache.get("key1")); // Output: value1
+        System.out.println(cache.get("key2")); // Output: value2
+        System.out.println(cache.get("key3")); // Output: value3
+        System.out.println(cache);
+        System.out.println("Cache size: " + cache.size());
+
+        cache.put("key4", "value4", System.currentTimeMillis() + 60000, 0);
+
+        /*try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        System.out.println(cache.get("key1")); // Output: null (expired)
+        System.out.println(cache.get("key2")); // Output: value2 (priority)
+        System.out.println(cache.get("key3")); // Output: value3
+        System.out.println(cache.get("key4"));
+        System.out.println("Cache size: " + cache.size());
     }
 
-    private static String process(String s, Processor process) {
-        return process.process(s);
-    }
 }
